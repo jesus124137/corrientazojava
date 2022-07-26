@@ -16,7 +16,7 @@ abstract class OpcionPedido {
     - Integer precio
 }
 
-class Completo {
+class Completo {    
 
 }
 
