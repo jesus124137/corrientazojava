@@ -1,0 +1,74 @@
+@startuml
+
+class Mesa {
+    - String numero
+    + Integer calcularTotal()
+    + Integer pago(Integer efectivo)
+}
+
+class Pedido {
+    
+    - String cliente
+    + Integer calcularValor()
+}
+
+abstract class OpcionPedido {
+    - Integer precio
+}
+
+class Completo {
+
+}
+
+class Bandeja {
+
+}
+
+class Sopa {
+    String nombre
+}
+
+class Principio {
+    String nombre
+}
+
+class Carne {
+    String nombre
+}
+
+class Ensalada {
+    String nombre
+}
+
+class Jugo {
+    String nombre
+}
+
+enum EstadoPedido {
+    PENDIENTE_ENTREGAR
+    PENDIENTE_COBRAR
+}
+
+class Adicional {
+    String nombre
+    Integer precio
+}
+
+Mesa "1" -- "1..*" Pedido
+Pedido "1" o-- "1" OpcionPedido
+
+OpcionPedido <|-left- Completo
+OpcionPedido <|-left- Bandeja
+
+Completo *-- "1" Sopa
+
+OpcionPedido *-- "1" Principio
+OpcionPedido *-- "1" Carne
+OpcionPedido *-- "0..1" Ensalada
+OpcionPedido *-- "1" Jugo
+
+Pedido .left.> EstadoPedido
+Pedido "1" o-- "0..*" Adicional
+
+
+@enduml
