@@ -1,5 +1,6 @@
 package com.misiontic.jesusmadero;
 
+import com.misiontic.jesusmadero.excepcion.PagoInsuficienteExcepcion;
 import com.misiontic.jesusmadero.modelo.Adicional;
 import com.misiontic.jesusmadero.modelo.Bandeja;
 import com.misiontic.jesusmadero.modelo.Carne;
@@ -31,7 +32,7 @@ public final class App {
         var precio = 12_000;
         var opcion1 = new Completo(precio, sopa, principio, carne, ensalada, jugo);
         var pedido = new Pedido("Jesus Madero", opcion1);
-        pedido.agregarAdicional(new Adicional("postre", 2_500));        
+        //pedido.agregarAdicional(new Adicional("postre", 3_000));        
         mesa.agregarPedido(pedido);
         
         precio = 10_000;
@@ -40,5 +41,17 @@ public final class App {
         mesa.agregarPedido(pedido);
 
         System.out.printf("Total de la mesa: $ %,d. %n", mesa.calcularTotal());
+       
+        var efectivo = 23_000;
+        try{        
+        var devuelta = mesa.pago(efectivo);
+        System.out.printf("Paga la cuenta con $ %,d y recibe una devuelta de $ %,d %n",
+        efectivo, devuelta);
+        }catch(PagoInsuficienteExcepcion ex){
+            System.err.printf("Creo que va a tener que lavar algunos platos!! %n Pago solso %,d. %n", efectivo);
+        }
+
+        System.out.printf("Ahora el total de la mesa: $ %,d. %n", mesa.calcularTotal());
+
     }
 }
