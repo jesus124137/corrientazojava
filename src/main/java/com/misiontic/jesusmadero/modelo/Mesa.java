@@ -2,6 +2,7 @@ package com.misiontic.jesusmadero.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.misiontic.jesusmadero.excepcion.PagoInsuficienteExcepcion;
 
 public class Mesa {
     private String numero;
@@ -33,14 +34,13 @@ public class Mesa {
         
     }    
 
-    public Integer pago(Integer efectivo){
+    public Integer pago(Integer efectivo) throws PagoInsuficienteExcepcion{
         var total = calcularTotal();
         if(efectivo <= total){
-            //TODO: Lanzar excepcion por fondos insuficientes
+            throw new PagoInsuficienteExcepcion("El efectivo no es suficiente para págar el total de la cuenta");
         }
-        //TODO: eliminar pedido
+        //Elinina los pedidos cancelados
         this.pedidos.clear();
-        //TODO: pagar pedido
         return efectivo - total;
     }    
 

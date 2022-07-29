@@ -1,0 +1,80 @@
+@startuml "Diagrama relacional"
+
+entity Mesa{
+    id: Integer <<PK>>
+    numero: varchar <<NN>> 
+}
+
+entity Pedido{
+    id: Integer
+    cliente: varchar
+    estado: varchar <<NN>>
+    --
+    id_tipo_opcion: Integer <<FK>> <<NN>>
+    --
+    id_mesa: Integer <<FK>> <<NN>>
+    --
+    id_sopa: Integer <<FK>>
+    id_principio: varchar <<FK>> <<NN>>
+    id_carne: varchar <<FK>> <<NN>>
+    id_ensalada: varchar <<FK>>
+    id_jugo: varchar <<FK>> <<NN>>    
+}
+
+entity Adicional{
+    id: Integer <<PK>>
+    nombre: varchar <<NN>>
+    precio: Integer <<NN>>
+}
+
+entity Sopa{
+    id: Integer <<PK>>
+    nombre: varchar <<NN>>
+}
+
+entity Principio{
+    id: Integer <<PK>>
+    nombre: varchar <<NN>>
+}
+
+entity Carne{
+    id: Integer <<PK>>
+    nombre: varchar <<NN>>
+}
+
+entity Ensalada{
+    id: Integer <<PK>>
+    nombre: varchar <<NN>>
+}
+
+entity Jugo{
+    id:Integer <<PK>>
+    nombre: varchar <<NN>>
+}
+
+entity PedidoAdicional{
+    id_pedido: Integer <<PK>> <<FK>>
+    id_adicional: Integer <<PK>> <<FK>>
+
+} 
+
+entity TipoOpcion{
+    id: Integer <<PK>>
+    tipo: varcha[Bandeja | Completo]
+    precio: Integer <<NN>>
+}
+
+Mesa --o{ Pedido
+
+Pedido -right-|{ PedidoAdicional
+Adicional --|{ PedidoAdicional
+
+Pedido }|-left-|| TipoOpcion
+
+Pedido }o-- Sopa
+Pedido }|-- Principio
+Pedido }|-- Carne
+Pedido }o-- Ensalada
+Pedido }|-- Jugo
+
+@enduml
