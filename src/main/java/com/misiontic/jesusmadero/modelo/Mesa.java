@@ -42,7 +42,12 @@ public class Mesa {
         //Elinina los pedidos cancelados
         this.pedidos.clear();
         return efectivo - total;
-    }    
+    }  
+    
+    @Override
+    public String toString(){
+        return numero;
+    }
 
     
 }

@@ -60,5 +60,13 @@ public abstract class OpcionPedido {
 
     public void setJugo(Jugo jugo) {
         this.jugo = jugo;
+    }
+
+    @Override
+    public String toString() {
+        return "OpcionPedido [carne=" + carne + ", ensalada=" + ensalada + ", jugo=" + jugo + ", precio=" + precio
+                + ", principio=" + principio + "]";
     }    
+
+    
 }

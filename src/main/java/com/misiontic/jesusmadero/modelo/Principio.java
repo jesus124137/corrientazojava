@@ -9,4 +9,10 @@ public class Principio {
     public String getNombre() {
         return nombre;
     }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return nombre;
+}
 }

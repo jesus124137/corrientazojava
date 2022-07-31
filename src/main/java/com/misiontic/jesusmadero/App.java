@@ -1,7 +1,8 @@
 package com.misiontic.jesusmadero;
 
+import java.util.Scanner;
+import com.misiontic.jesusmadero.controlador.RestauranteController;
 import com.misiontic.jesusmadero.excepcion.PagoInsuficienteExcepcion;
-import com.misiontic.jesusmadero.modelo.Adicional;
 import com.misiontic.jesusmadero.modelo.Bandeja;
 import com.misiontic.jesusmadero.modelo.Carne;
 import com.misiontic.jesusmadero.modelo.Completo;
@@ -21,6 +22,27 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
+
+        try(var sc = new Scanner(System.in)){
+        var controlador = new RestauranteController(sc);
+
+        controlador.iniciarBaseDatos();
+
+        var mesa = controlador.consultarMesa("01");
+        System.out.println("La mesa consultada es: " + mesa);
+
+        controlador.agregarPedido(mesa);
+        System.out.println("El pedido es: " + mesa.calcularTotal());
+        
+       //Pruebaventa();
+        } catch (Exception ex) {
+            System.err.println("Ocurrio un error y salgo de la aplicacion: \n"+ ex.getMessage());
+            //ex.printStackTrace(); sirve para mostrar los errores de la aplicacion en consola
+        }
+
+    }
+
+       private static void Pruebaventa() {
         var mesa = new Mesa("01");
 
         var sopa = new Sopa("verduras");
@@ -52,6 +74,5 @@ public final class App {
         }
 
         System.out.printf("Ahora el total de la mesa: $ %,d. %n", mesa.calcularTotal());
-
     }
 }
