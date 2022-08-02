@@ -31,4 +31,19 @@ public class MesaView {
         System.out.println("MESAS EXISTENTES :.");
         mesas.forEach(System.out::println);
     }
+    public Integer leerValorEfectivo() {
+        System.out.println("AGREGANDO UNA NUEVA MESA :.");
+        do{
+            try {
+                System.out.print("Ingrese el efectivo que entrego el cliente: ");
+                var numero = entrada.nextInt();
+                entrada.nextLine();
+    
+                return numero;
+            }catch (Exception ex){
+                System.err.println("Por favor ingrese un mumero valido");
+            }
+        }while(true);
+        
+    }
 }
