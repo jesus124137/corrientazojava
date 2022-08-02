@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.misiontic.jesusmadero.excepcion.ObjetoNoExistenteException;
+import com.misiontic.jesusmadero.excepcion.PagoInsuficienteExcepcion;
 import com.misiontic.jesusmadero.modelo.Carne;
 import com.misiontic.jesusmadero.modelo.Ensalada;
 import com.misiontic.jesusmadero.modelo.Jugo;
@@ -13,10 +14,12 @@ import com.misiontic.jesusmadero.modelo.Principio;
 import com.misiontic.jesusmadero.modelo.Sopa;
 import com.misiontic.jesusmadero.vista.MesaView;
 import com.misiontic.jesusmadero.vista.PedidoView;
+import com.misiontic.jesusmadero.vista.principalView;
 
 public class RestauranteController {  
     private MesaView mesaView;
-    private PedidoView pedidoView;  
+    private PedidoView pedidoView;
+    private principalView principalView;
 
     private List<Mesa> mesas;
     private List<Sopa> sopas;
@@ -27,7 +30,8 @@ public class RestauranteController {
 
     public RestauranteController(Scanner entrada){
         mesaView = new MesaView(entrada);
-        pedidoView = new PedidoView(entrada, this); 
+        pedidoView = new PedidoView(entrada, this);
+        principalView = new principalView(entrada, this);
 
          mesas = new ArrayList<>();
          sopas = new ArrayList<>();
@@ -71,6 +75,10 @@ public class RestauranteController {
         jugos.add(new Jugo("Mora"));
         jugos.add(new Jugo("Piña"));
         jugos.add(new Jugo("Limonada"));
+    }
+
+    public void iniciarAplicacion(){
+        principalView.iniciarAplicacion();
     }
         
     public void crearMesa() { 
@@ -121,4 +129,26 @@ public class RestauranteController {
     public List<Jugo> listarjugo() {
         return jugos;
     }
+
+    public Integer pagarCuenta(Mesa mesa) throws PagoInsuficienteExcepcion {
+        //solicitar el valor del efectivo
+        var efectivo = mesaView.leerValorEfectivo();
+        var total = mesa.calcularTotal();
+        if(efectivo < total){
+            throw new PagoInsuficienteExcepcion("El efectivo no es suficiente para págar el total de la cuenta");
+        }
+        //Elimina los pedidos cancelados
+        mesa.limpiarPedidos();
+        return efectivo - total;
+    }
+
+    public Object seleccionarMesa() {
+        System.out.println("Listado de mesas existentes");
+        for (int i = 0; i < mesas.size(); i++) {
+            System.out.printf("%d -> %n", (i + 1), mesas.get(1));
+            
+        }
+        return null;
+    }
+
 }
